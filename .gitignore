@@ -6,7 +6,6 @@ __pycache__/
 # Environment variables and credentials
 .env
 *.env
-
 # Flask instance folder (used for file uploads, temporary files, etc.)
 instance/
 
@@ -36,7 +35,6 @@ env/
 # Static content cache (e.g., Flask-Assets)
 *.sass-cache
 *.cache
-*.html
 
 # Deployment
 *.bak
