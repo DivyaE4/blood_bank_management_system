@@ -3,8 +3,8 @@ from forms import LoginForm
 from models import db, User
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sql123@localhost/donation_db'
-app.config['SECRET_KEY'] = 'your_secret_key'
+
+
 db.init_app(app)
 
 @app.route('/')
@@ -22,4 +22,4 @@ def login():
 # Similar routes for register, dashboard, etc.
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
