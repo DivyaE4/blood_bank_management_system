@@ -1,0 +1,130 @@
+/* General page styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
+    background-size: cover; 
+    color: #333;
+}
+
+header {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #e53935;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Container for the buttons */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Increase the gap between buttons */
+}
+
+.button {
+    display: inline-block;
+    background-color: #e53935;
+    color: #fff;
+    padding: 20px 60px; /* Increase padding for larger, more elongated buttons */
+    margin: 10px;
+    text-decoration: none;
+    font-size: 20px; /* Increase font size */
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 250px; /* Set a fixed width for elongated buttons */
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #c62828;
+    transform: scale(1.05);
+}
+
+
+/* About and services section */
+.about, .services {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.about h2, .services h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #e53935;
+    text-align: center;
+}
+
+.about p, .services ul {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.services ul {
+    list-style-type: disc;
+    padding-left: 40px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #e53935;
+    color: #fff;
+    margin-top: 20px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    header {
+        padding: 30px 0;
+    }
+    
+    h1 {
+        font-size: 28px;
+    }
+    
+    p {
+        font-size: 16px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+    }
+
+    .button {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+    
+    .about, .services {
+        padding: 15px;
+    }
+}
