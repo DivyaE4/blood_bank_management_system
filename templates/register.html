@@ -1,44 +1,62 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
 </head>
 <body>
-    <div class="login-container">  <!-- Changed to login-container for consistent styling -->
-        <h1>Register</h1>
-        <form method="POST" action="{{ url_for('register') }}">
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.username.label }}<br>
-                {{ form.username(size=32) }}
-            </p>
-            <p>
-                {{ form.password.label }}<br>
-                {{ form.password(size=32) }}
-            </p>
-            <p>
-                {{ form.confirm_password.label }}<br>
-                {{ form.confirm_password(size=32) }}
-            </p>
-            <p>
-                {{ form.age.label }}<br>
-                {{ form.age(size=32) }}
-            </p>
-            <p>
-                {{ form.blood_type.label }}<br>
-                {{ form.blood_type() }}
-            </p>
-            <p>
-                {{ form.contact_info.label }}<br>
-                {{ form.contact_info(size=32) }}
-            </p>
-            <p>{{ form.submit(value='Register', class_='button') }}</p>
-        </form>
+    <div class="login-container"> <!-- Entire container for left side + right side -->
+        
+        <!-- Left Side with Circle and Text -->
+        <div class="left-side">
+            <div class="left-text">
+                <h2>Join Us Today!</h2>
+                <p>Create an account and explore all the features. We are excited to have you onboard!</p>
+            </div>
+        </div>
 
-        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>  <!-- Link to login page -->
+        <!-- Right Side with Registration Form -->
+        <div class="right-side">
+            <center><h1>Register</h1></center>
+            <form method="POST" action="{{ url_for('register') }}">
+                {{ form.hidden_tag() }}
+                
+                <div class="form-group">
+                    {{ form.username.label }}<br>
+                    {{ form.username(size=32) }}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_password.label }}<br>
+                    {{ form.confirm_password(size=32) }}
+                </div>
+                <div class="form-group">
+                    {{ form.age.label }}<br>
+                    {{ form.age(size=32) }}
+                </div>
+                <div class="form-group">
+                    {{ form.blood_type.label }}<br>
+                    {{ form.blood_type() }}
+                </div>
+                <div class="form-group">
+                    {{ form.contact_info.label }}<br>
+                    {{ form.contact_info(size=32) }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.submit(value='Register', class_='button') }}
+                </div>
+            </form>
+
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        </div>
     </div>
 </body>
 </html>

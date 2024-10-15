@@ -1,0 +1,139 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
+    background-size: cover; 
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    display: flex;
+    width: 800px;
+    height: 600px;
+    background: rgba(255, 0, 0, 0.85);
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Left-side container with background and circles */
+.left-side {
+    background: linear-gradient(135deg, #ff4e50, #cb0724);
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.left-text {
+    z-index: 1;
+}
+
+.left-side::before, .left-side::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Large circle */
+.left-side::before {
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: 20%;
+}
+
+/* Smaller circle */
+.left-side::after {
+    width: 250px;
+    height: 250px;
+    top: 60%;
+    left: 10%;
+}
+
+/* Right-side container for the form */
+.right-side {
+    background-color: white;
+    width: 50%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 12px; /* Further reduced base font size */
+}
+
+/* Form styling */
+form {
+    max-width: 350px; /* Reduced form width */
+    margin: 0 auto;
+}
+
+.right-side h1 {
+    font-size: 20px; /* Smaller heading size */
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 10px; /* Tighter spacing between form elements */
+}
+
+.form-group label {
+    font-size: 12px; /* Reduced label font size */
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-group input[type="text"], 
+.form-group input[type="password"], 
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 6px; /* Reduced padding for inputs */
+    font-size: 11px; /* Smaller font size for input text */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+.button {
+    background-color: #ff6666;
+    color: white;
+    padding: 8px 12px; /* Smaller padding */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px; /* Smaller button text size */
+    width: 100%;
+    margin-top: 8px;
+}
+
+.button:hover {
+    background-color: #cc3333;
+}
+
+p {
+    font-size: 15px; /* Further reduced font size for paragraph */
+    text-align: center;
+    color: #333;
+}
+
+p a {
+    color: #f44e3b;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

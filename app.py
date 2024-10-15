@@ -60,9 +60,9 @@ def register():
 
 
 # Example dashboard route
-@app.route('/information')
+@app.route('/dashboard')
 def information():
-    return render_template('information.html')
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.run()
