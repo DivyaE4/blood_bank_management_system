@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="POST" action="{{ url_for('login') }}">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-        </p>
-        <p>{{ form.submit(value='Login') }}</p>
-    </form>
-
-    <p>New here? <a href="{{ url_for('register') }}">Register</a></p>  <!-- Link to registration page -->
+    <div class="login-container">
+        <h1>Login</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(value='Login', class_='button') }}
+            </div>
+        </form>
+        <p>New here? <a href="{{ url_for('register') }}">Register</a></p> <!-- Link to registration page -->
+    </div>
 </body>
 </html>
