@@ -28,7 +28,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:  # You might want to hash passwords for security
             flash('Login successful!', 'success')
-            return redirect(url_for('information'))  # Redirect to a information or home page
+            return redirect(url_for('dashboard'))  # Redirect to a information or home page
         else:
             flash('Invalid username or password.', 'danger')
 
