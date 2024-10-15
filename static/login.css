@@ -1,33 +1,51 @@
+/* General page styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f9;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
+    background-size: cover; 
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Container for the login form */
 .login-container {
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Increased width */
+    padding: 40px; /* Increased padding for larger box */
+    background: rgba(164, 51, 51, 0.8); /* Red with transparency */
     border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: white; /* White text */
 }
 
-h2 {
-    margin-bottom: 20px;
-    color: #343a40;
+/* Hover effect for the login container */
+.login-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Headings */
+h1 {
+    margin-bottom: 30px; /* Increased spacing below heading */
+    color: white; /* White text */
+}
+
+/* Form styles */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 15px; /* Spacing between form fields */
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
+    color: white; /* White text */
 }
 
 .form-group input {
@@ -37,9 +55,10 @@ h2 {
     border-radius: 5px;
 }
 
+/* Button styles */
 .button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #591c1c; /* Dark red */
     color: white;
     border: none;
     border-radius: 5px;
@@ -50,27 +69,37 @@ h2 {
 }
 
 .button:hover {
-    background-color: #0056b3;
+    background-color: #600000; /* Darker red on hover */
 }
 
-.flash-messages {
-    margin-top: 15px;
+/* Link styles */
+a {
+    color: #ffcccc; /* Light red for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.flashes {
     list-style: none;
     padding: 0;
 }
 
-.flash-messages li.danger {
-    background-color: #ffcccc;
-    color: red;
+.flashes li {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
 }
 
-.flash-messages li.success {
-    background-color: #ccffcc;
-    color: green;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+.flashes .success {
+    background-color: #d4edda;
+    color: #155724;
 }
+
+.flashes .danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
