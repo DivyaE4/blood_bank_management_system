@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    
+</head>
+<body>
+    <header>
+        <h1>Blood Bank Dashboard</h1>
+        <p>Choose an option below to proceed.</p>
+    </header>
+    
+    <div class="container">
+        <div class="buttons">
+            <a href="/donate" class="button">Donate Blood</a>
+            <a href="/request" class="button">Request Blood</a>
+        </div>
+    </div>
+
+    <section class="facts">
+        <h2>Fun Facts About Blood Donation</h2>
+        <ul>
+            <li>One donation can save up to three lives.</li>
+            <li>Every two seconds, someone in the U.S. needs blood.</li>
+            <li>Donating blood is safe and easy.</li>
+            <li>Blood donations are used for surgeries, cancer treatments, and trauma care.</li>
+            <li>People with O-negative blood are universal donors.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Blood Bank Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
