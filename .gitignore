@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables and credentials
+.env
+*.env
+
+# Flask instance folder (used for file uploads, temporary files, etc.)
+instance/
+
+# Flask SQLite database files
+*.db
+*.sqlite3
+
+# Virtual environment (if using venv or virtualenv)
+venv/
+ENV/
+env/
+.venv/
+
+# Pytest cache and logs
+.pytest_cache/
+*.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# IDE and editor-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Static content cache (e.g., Flask-Assets)
+*.sass-cache
+*.cache
+*.html
+
+# Deployment
+*.bak
+*.pid
+*.seed
+*.cover
+
+# Node modules (if using npm in the project)
+node_modules/
