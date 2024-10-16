@@ -61,7 +61,7 @@ def register():
 
 # Example dashboard route
 @app.route('/dashboard')
-def information():
+def dashboard():
     return render_template('dashboard.html')
 
 if __name__ == '__main__':

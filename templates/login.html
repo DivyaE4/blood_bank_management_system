@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,49 @@
                 {{ form.submit(value='Login', class_='button') }}
             </div>
         </form>
-        <p>New here? <a href="{{ url_for('register') }}">Register</a></p> <!-- Link to registration page -->
+        <p>New here? <a href="{{ url_for('register') }}">Register</a></p> 
+    </div>
+</body>
+</html> 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <!-- Left Side with Circle and Text -->
+        <div class="left-side">
+            <div class="left-text">
+                <h2>Welcome Back</h2>
+                <p>Access your account by entering your login details. We are glad to see you again!</p>
+            </div>
+        </div>
+
+        <!-- Right Side with Form -->
+        <div class="right-side">
+            <h1>Login</h1>
+            <form method="POST" action="{{ url_for('login') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.username.label }}<br>
+                    {{ form.username(size=32) }}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(value='Login', class_='button') }}
+                </div>
+            </form>
+            <p>New here? <a href="{{ url_for('register') }}">Register</a></p>
+        </div>
     </div>
 </body>
 </html>
