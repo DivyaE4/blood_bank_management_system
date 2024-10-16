@@ -19,3 +19,6 @@
 ├── forms.py                  # Flask-WTF forms
 ├── utils.py                  # Utility functions (optional)
 └── requirements.txt          # Python packages
+
+rgba(164, 51, 51, 0.8); /* Red with transparency */
+background-color: #591c1c; /* Dark red */
