@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -14,3 +15,12 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.username}>'
+
+class Request(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    blood_type = db.Column(db.String(3), nullable=False)
+    contact_info = db.Column(db.String(15), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('login_details.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref=db.backref('requests', lazy=True))

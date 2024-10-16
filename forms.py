@@ -24,3 +24,13 @@ class RegisterForm(FlaskForm):
     ])
     submit = SubmitField('Register')
 
+class RequestForm(FlaskForm):
+    blood_type = SelectField('Blood Type', choices=[
+        ('A+', 'A+'), ('A-', 'A-'), 
+        ('B+', 'B+'), ('B-', 'B-'), 
+        ('AB+', 'AB+'), ('AB-', 'AB-'), 
+        ('O+', 'O+'), ('O-', 'O-')
+    ], validators=[DataRequired()])
+    contact_info = StringField('Contact Info', validators=[DataRequired()])
+    submit = SubmitField('Make a Request')
+

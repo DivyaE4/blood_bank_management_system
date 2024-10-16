@@ -65,5 +65,34 @@ def register():
 def dashboard():
     return render_template('dashboard.html')
 
+# Route for the Request Management page
+@app.route('/request', methods=['GET'])
+def request():
+    return render_template('request.html')
+
+# # Route for making a request
+# @app.route('/make_request', methods=['GET', 'POST'])
+# def make_request():
+#     if flask_request.method == 'POST':
+#         # Here you would handle the logic to add the request to the database
+#         blood_type = flask_request.form.get('blood_type')  # Get blood type from the form
+#         contact_info = flask_request.form.get('contact_info')  # Get contact info from the form
+#         user_id = 1  # Replace with the actual logged-in user ID
+#         new_request = Request(blood_type=blood_type, contact_info=contact_info, user_id=user_id)
+#         db.session.add(new_request)
+#         db.session.commit()
+#         flash('Your request has been submitted!', 'success')
+#         return redirect(url_for('request_management'))
+
+#     return render_template('make_request.html')
+
+# # Route for viewing past requests
+# @app.route('/view_requests', methods=['GET'])
+# def view_requests():
+#     # Query for past requests of the logged-in user
+#     user_id = 1  # Replace with the actual logged-in user ID
+#     past_requests = Request.query.filter_by(user_id=user_id).all()
+#     return render_template('view_requests.html', requests=past_requests)
+
 if __name__ == '__main__':
     app.run()
