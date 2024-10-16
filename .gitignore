@@ -44,3 +44,6 @@ env/
 
 # Node modules (if using npm in the project)
 node_modules/
+
+#config.py
+config.py

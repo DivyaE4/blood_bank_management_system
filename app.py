@@ -1,9 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from forms import LoginForm, RegisterForm  # Make sure to create a RegisterForm
 from models import db, User
+from config import SQLALCHEMY_DATABASE_URI
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sql123@localhost/donation_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SECRET_KEY'] = 'your_secret_key'
 
 # Initialize the database
