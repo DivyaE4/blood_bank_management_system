@@ -199,7 +199,7 @@ def make_request():
                 conn.close()
                 
                 flash('Request submitted successfully!')
-                return redirect(url_for('request_confirmation'))  # Redirect after successful submission
+                return redirect(url_for('request_status'))  # Redirect after successful submission
             except Exception as e:
                 conn.rollback()
                 flash(f'Error submitting request: {e}')
@@ -210,9 +210,10 @@ def make_request():
     return render_template('make_request.html', form=form, username=username)
 
 # Confirmation page
-@app.route('/request-confirmation')
-def request_confirmation():
-    return "Your request has been submitted successfully!"
+@app.route('/request_status')
+def request_status():
+    return render_template('request_status.html')
+
 
 # Route for logging out
 @app.route('/logout')

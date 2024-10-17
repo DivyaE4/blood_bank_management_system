@@ -75,10 +75,47 @@ body {
     text-align: center;
 }
 
+.welcome-box {
+    display: flex;
+    align-items: center;
+    background-color: #ff6666; /* Match button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 30px; /* Space below the welcome box */
+}
+
+.user-icon {
+    width: 30px; /* Adjust icon size */
+    height: 30px; /* Adjust icon size */
+    margin-right: 10px; /* Space between icon and text */
+}
+
 .right-side h1 {
     font-size: 36px;
     margin-bottom: 30px;
     color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+.form-group label {
+    font-size: 14px; /* Slightly smaller label font size */
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-group input[type="text"], 
+.form-group input[type="password"], 
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .button-section {
