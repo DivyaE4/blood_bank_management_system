@@ -1,5 +1,15 @@
 USE donation_db;
 
+-- Create the login_details table
+CREATE TABLE IF NOT EXISTS login_details (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    age INTEGER NOT NULL,
+    blood_type VARCHAR(10) NOT NULL,
+    contact_info VARCHAR(10) UNIQUE NOT NULL
+);
+
 CREATE TABLE donation_camps (
     id INT AUTO_INCREMENT PRIMARY KEY,
     camp_name VARCHAR(255) NOT NULL,
@@ -7,6 +17,17 @@ CREATE TABLE donation_camps (
     timings VARCHAR(100) NOT NULL,
     address TEXT NOT NULL
 );
+
+-- Create the donations table
+CREATE TABLE IF NOT EXISTS donations (
+    donation_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    camp_id INT NOT NULL,
+    donation_date DATE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES login_details(id),
+    FOREIGN KEY (camp_id) REFERENCES donation_camps(id)
+);
+
 
 INSERT INTO donation_camps (camp_name, location, timings, address) 
 VALUES 
