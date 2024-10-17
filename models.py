@@ -14,3 +14,18 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.username}>'
+
+class DonationCamp(db.Model):
+    __tablename__ = 'donation_camps'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    camp_name = db.Column(db.String(255), nullable=False)
+    location = db.Column(db.String(255), nullable=False)
+    timings = db.Column(db.String(255))
+    address = db.Column(db.Text)
+    
+    def __init__(self, camp_name, location, timings, address):
+        self.camp_name = camp_name
+        self.location = location
+        self.timings = timings
+        self.address = address
