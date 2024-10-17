@@ -1,0 +1,111 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.95); /* Higher transparency */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    max-width: 900px;
+    width: 80%;
+    text-align: left;
+}
+
+h1 {
+    font-size: 42px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #444;
+    align-self: center;
+}
+
+input[type="text"] {
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #ff4e50;
+}
+
+button[type="submit"] {
+    padding: 10px 25px;
+    background-color: #ff4e50;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+button[type="submit"]:hover {
+    background-color: #ff6666;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+li {
+    margin: 15px 0;
+    font-size: 20px;
+    color: #444;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+li:hover {
+    color: #ff4e50;
+    transform: translateX(5px);
+}
+
+a {
+    color: #ff4e50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ff6666;
+    text-decoration: underline;
+}
+
+.no-camps {
+    color: #888;
+    font-size: 18px;
+    text-align: center;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Request</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='request.css') }}">
+</head>
+<body>
+    <div class="top-bar">
+        <p>Welcome, {{ username }}!</p> <!-- Display the logged-in username -->
+    </div>
+
+    <div class="request-container">
+        <div class="left-side">
+            <div class="left-text">
+                <h1>Make a Request</h1>
+                <p>In need of blood? Submit your request now and get the life-saving help you deserve.</p>
+            </div>
+        </div>
+        <div class="right-side">
+            <h1>Request Form</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div>
+                    {{ form.blood_type.label }}<br>
+                    {{ form.blood_type() }} <!-- Dropdown for blood type -->
+                </div>
+                <div>
+                    {{ form.quantity.label }}<br>
+                    {{ form.quantity(size=20) }} <!-- Input for quantity -->
+                </div>
+                <div>
+                    {{ form.id_proof.label }}<br>
+                    {{ form.id_proof() }}  <!-- Input for file upload -->
+                </div>
+                <div class="button-section">
+                    <button type="submit" class="button submit-request">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
