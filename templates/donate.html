@@ -1,0 +1,65 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='donate.css') }}">
+</head>
+<body>
+    <div class="donation-container">
+        <div class="left-side">
+            <div class="left-text">
+                <h2>Make a Difference!</h2>
+                <p>Your contributions help us improve lives.</p>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <h1>Donation Portal</h1>
+
+            <div class="button-section">
+                <button class="button" id="donate-location">Donate by Location</button>
+                <button class="button" id="make-donation">Make a Donation</button>
+                <button class="button" id="view-donations">View Previous Donations</button>
+            </div>
+
+            
+        </div>
+    </div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Page</title>
+    <!-- Link the CSS file correctly -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='donate.css') }}">
+</head>
+<body>
+    <div class="donation-container">
+        <!-- Left-side for motivational text or images -->
+        <div class="left-side">
+            <div class="left-text">
+                <h2>Make a Difference!</h2>
+                <p>Your contributions help us improve lives.</p>
+            </div>
+        </div>
+
+        <!-- Right-side for donation content -->
+        <div class="right-side">
+            <h1>Donation Portal</h1>
+
+            <!-- Button section -->
+            <div class="button-section">
+                <!-- Properly formatted <a> tags for routing -->
+                <a href="/donate-location" class="button">Donate by Location</a>
+                <a href="/make-donation" class="button">Make a Donation</a>
+                <a href="/view-donations" class="button">View Previous Donations</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

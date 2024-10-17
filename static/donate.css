@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.donation-container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    height: 600px;
+    background-color: rgba(255, 255, 255, 0.9); 
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+}
+
+.left-side {
+    background: linear-gradient(135deg, #ff4e50, #cb0724);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.left-side::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    top: -100px;
+    left: -100px;
+    z-index: 1;
+}
+
+.left-text {
+    position: relative;
+    z-index: 2;
+}
+
+.left-text h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.left-text p {
+    font-size: 18px;
+}
+
+.right-side {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.right-side h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.button-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+}
+
+.button {
+    display: inline-block;
+    background-color: #ff6666;
+    color: white;
+    padding: 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 15px 0;
+    width: 100%;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background-color: rgba(255, 102, 102, 0.8);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}

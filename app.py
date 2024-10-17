@@ -65,6 +65,22 @@ def register():
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route('/donate')
+def donate():
+    return render_template('donate.html')
+
+@app.route('/donate-location')
+def donate_location():
+    return render_template('donate_location.html')
+
+@app.route('/make-donation')
+def make_donation():
+    return render_template('make_donation.html')
+
+@app.route('/view-donations')
+def view_donations():
+    return render_template('view_donations.html')
+
 # Route for the Request Management page
 @app.route('/request', methods=['GET'])
 def request():
