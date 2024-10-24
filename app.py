@@ -22,6 +22,8 @@ def get_db_connection():
 def home():
     return render_template('home.html')
 
+
+
 # Donation location route with filtering
 @app.route('/donate-location', methods=['GET'])
 def index():
@@ -44,25 +46,12 @@ def index():
     cursor.close()
     conn.close()
     
-    return render_template('donate_location.html', camps=camps)
+    return render_template('donate_location.html', camps=camps, username=session.get('username'))  # Pass username to the template
 
-# Route for viewing details of a specific donation camp
-@app.route('/camp/<int:id>')
-def camp_details(id):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    
-    # Fetch camp details by ID
-    query = 'SELECT * FROM donation_camps WHERE id = %s'
-    cursor.execute(query, (id,))
-    camp = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    
-    if camp is None:
-        return "No such camp found."
-    
-    return render_template('camp_details.html', camp=camp)
+
+
+
+from flask import session  # Import session
 
 # Route for user login
 @app.route('/donor_recipient', methods=['GET', 'POST'])
@@ -82,12 +71,16 @@ def login():
         conn.close()
         
         if user:
+            session['user_id'] = user['id']  # Store user ID in session
+            session['username'] = user['username']  # Store username in session
             flash('Login successful!', 'success')
             return redirect(url_for('dashboard'))  # Redirect to a dashboard or home page
         else:
             flash('Invalid username or password.', 'danger')
     
     return render_template('login.html', form=form)
+
+
 
 # Route for user registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -122,6 +115,49 @@ def register():
     
     return render_template('register.html', form=form)
 
+
+@app.route('/camp/<int:id>', methods=['GET', 'POST'])
+def camp_details(id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Fetch camp details
+    cursor.execute("SELECT * FROM donation_camps WHERE id = %s", (id,))
+    camp = cursor.fetchone()
+
+    if not camp:
+        flash('Camp not found.', 'danger')
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        # Check if the user is logged in
+        if 'user_id' not in session:
+            flash('Please log in to make a donation.', 'danger')
+            return redirect(url_for('login'))
+
+        user_id = session['user_id']
+        camp_name = camp['camp_name']
+        location = camp['location']
+        timings = camp['timings']
+
+        # Insert the donation into the donations table
+        cursor.execute(
+            "INSERT INTO donations (user_id, camp_id, camp_name, location, timings) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (user_id, id, camp_name, location, timings)
+        )
+        conn.commit()
+        flash('Donation successful!', 'success')
+        return redirect(url_for('index'))
+
+    cursor.close()
+    conn.close()
+
+    return render_template('camp_details.html', camp=camp)
+
+
+
+
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
@@ -138,7 +174,34 @@ def make_donation():
 
 @app.route('/view-donations')
 def view_donations():
-    return render_template('view_donations.html')
+    if 'user_id' not in session:
+        flash('Please log in to view your donations.', 'danger')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    # Fetch donations made by the logged-in user
+    cursor.execute('''SELECT d.camp_name, d.location, d.timings, dc.address 
+                      FROM donations d
+                      JOIN donation_camps dc ON d.camp_id = dc.id
+                      WHERE d.user_id = %s''', (user_id,))
+    donations = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+    
+    return render_template('view_donations.html', donations=donations, username=session.get('username'))
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)  # Remove user ID from session
+    session.pop('username', None)  # Remove username from session
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.run()

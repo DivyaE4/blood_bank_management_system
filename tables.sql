@@ -1,8 +1,8 @@
 USE donation_db;
 
--- Create the login_details table
+Create the login_details table
 CREATE TABLE IF NOT EXISTS login_details (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
     age INTEGER NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS login_details (
     contact_info VARCHAR(10) UNIQUE NOT NULL
 );
 
-CREATE TABLE donation_camps (
+CREATE TABLE IF NOT EXISTS donation_camps (
     id INT AUTO_INCREMENT PRIMARY KEY,
     camp_name VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
@@ -22,8 +22,10 @@ CREATE TABLE donation_camps (
 CREATE TABLE IF NOT EXISTS donations (
     donation_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    camp_name VARCHAR(255) NOT NULL,
     camp_id INT NOT NULL,
-    donation_date DATE NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    timings VARCHAR(100) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES login_details(id),
     FOREIGN KEY (camp_id) REFERENCES donation_camps(id)
 );

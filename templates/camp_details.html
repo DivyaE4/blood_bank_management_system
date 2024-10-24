@@ -1,0 +1,64 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Camp Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='camp_details.css') }}">
+</head>
+<body>
+    <h1>Camp Details</h1>
+    
+    {% if camp %}
+        <h2>{{ camp['name'] }}</h2>
+        <p><strong>Location:</strong> {{ camp['location'] }}</p>
+        <p><strong>Timings:</strong> {{ camp['timings'] }}</p>
+        
+        <form method="POST" action="{{ url_for('camp_details', id=camp['id']) }}">
+            <button type="submit">Confirm Here</button>
+        </form>
+    {% else %}
+        <p>Sorry, no camp details found.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('index') }}">Back to Camps</a>
+ 
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Camp Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='camp_details.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Camp Details</h1>
+
+        {% if camp %}
+            <h2>{{ camp['name'] }}</h2>
+            <p><strong>Location:</strong> {{ camp['location'] }}</p>
+            <p><strong>Timings:</strong> {{ camp['timings'] }}</p>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <p>Thank you for applying to this camp! Please ensure that you carry a valid ID proof and are present at the location on time.</p>
+            </div>
+
+            <!-- Form to make a donation -->
+            <form method="POST" action="{{ url_for('camp_details', id=camp['id']) }}">
+                <button type="submit">Confirm Here</button>
+            </form>
+        {% else %}
+            <p>Sorry, no camp details found.</p>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}">Back to Camps</a>
+    </div>
+
+</body>
+</html>

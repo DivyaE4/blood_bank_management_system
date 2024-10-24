@@ -1,0 +1,89 @@
+/* Body with background image and center alignment */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
+    background-size: cover; 
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Set default text color to white */
+}
+
+/* Container to hold the camp details */
+.container {
+    display: flex;
+    width: 800px;
+    height: auto; /* Adapt height to content */
+    /* background-color: #ff4e50; */
+    background-color: rgba(226, 57, 57, 0.473);
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    color: rgb(0, 0, 0); /* Ensure container text is white */
+}
+
+/* Header and title styling */
+h1 {
+    color: rgb(0, 0, 0);
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 2em;
+    color: rgb(0, 0, 0);
+    margin-top: 10px;
+}
+
+/* Styling for camp details */
+p {
+    font-size: 1.2em;
+    color: rgb(0, 0, 0); /* Ensure paragraphs are white */
+    margin: 10px 0;
+}
+
+/* Instructions box with a highlighted background */
+.instructions {
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 1.1em;
+    color: rgb(0, 0, 0); /* Ensure instructions text is white */
+}
+
+/* Button for confirming donation */
+button {
+    background-color: #ff4e50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #cb0724;
+}
+
+/* Back to camps link styling */
+a {
+    color: white;
+    font-size: 1.1em;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}
