@@ -24,7 +24,6 @@ def home():
     return render_template('home.html')
 
 
-
 # Donation location route with filtering
 @app.route('/donate-location', methods=['GET'])
 def index():
@@ -57,8 +56,7 @@ from flask import session  # Import session
 # Route for user login
 @app.route('/donor_recipient', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()  # Ensure you have a LoginForm defined in your forms.py
-    
+    form = LoginForm()  # Ensure you have a LoginForm defined in your forms.py    
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
@@ -104,12 +102,10 @@ def register():
         if existing_user:
             flash('Username already exists. Please choose a different one.', 'danger')
         else:
-            # Hash the password before storing
-            hashed_password = generate_password_hash(password)
             # Insert new user if username is unique
             query = '''INSERT INTO login_details (username, password, age, blood_type, contact_info)
                        VALUES (%s, %s, %s, %s, %s)'''
-            cursor.execute(query, (username, hashed_password, age, blood_type, contact_info))
+            cursor.execute(query, (username, password, age, blood_type, contact_info))
             conn.commit()
             cursor.close()
             conn.close()
@@ -158,6 +154,29 @@ def camp_details(id):
 
     return render_template('camp_details.html', camp=camp)
 
+@app.route('/view-requests')
+def view_requests():
+    # Ensure user is logged in
+    if 'user_id' not in session:
+        flash('Please log in to view your requests.', 'danger')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    
+    # Connect to the database and fetch requests made by the logged-in user
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = '''SELECT request_id, recipient_id, blood_type, quantity, request_date, status 
+           FROM requests 
+           WHERE recipient_id = %s 
+           ORDER BY request_date DESC'''
+    cursor.execute(query, (user_id,))
+    requests = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('view_requests.html', requests=requests, username=session.get('username'))
 
 
 
@@ -276,12 +295,6 @@ def request_status():
     return render_template('request_status.html')
 
 
-# Route for logging out
-@app.route('/logout')
-def logout():
-    session.clear()  # Clear the session
-    flash('You have been logged out.', 'success')
-    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)  # Enable debug mode for development
