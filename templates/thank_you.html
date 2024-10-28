@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Donating!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #ff4e50;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #ff4e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #ff6666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thank You for Choosing to Donate Blood!</h1>
+    <p>Please make sure to bring a valid ID proof when you arrive at the donation camp.</p>
+    <p>Your contribution is vital and greatly appreciated!</p>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

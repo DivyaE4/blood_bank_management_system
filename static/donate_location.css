@@ -4,40 +4,27 @@ body {
     padding: 0;
     background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
     background-size: cover;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container {
-    background-color: rgba(255, 255, 255, 0.95); /* Higher transparency */
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-    max-width: 900px;
-    width: 80%;
-    text-align: left;
+    min-height: 100vh;
 }
 
 h1 {
     font-size: 42px;
     color: #333;
     text-align: center;
-    margin-bottom: 30px;
+    margin-top: 20px;
     font-weight: bold;
 }
 
 form {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 label {
-    font-size: 20px;
+    font-size: 18px;
     margin-right: 10px;
-    color: #444;
+    color: #333;
     align-self: center;
 }
 
@@ -74,23 +61,40 @@ button[type="submit"]:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
+/* Camps container */
+.camps-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
 }
 
-li {
-    margin: 15px 0;
-    font-size: 20px;
-    color: #444;
-    transition: all 0.3s ease;
-    font-weight: 500;
+/* Style for each camp placard */
+.camp-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-li:hover {
-    color: #ff4e50;
-    transform: translateX(5px);
+.camp-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.camp-box h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.camp-box p {
+    font-size: 16px;
+    color: #555;
 }
 
 a {
@@ -104,8 +108,10 @@ a:hover {
     text-decoration: underline;
 }
 
+/* No camps message */
 .no-camps {
     color: #888;
     font-size: 18px;
     text-align: center;
+    margin-top: 20px;
 }

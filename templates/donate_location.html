@@ -1,30 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donation Camps</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='donate_location.css') }}">
-</head>
-<body>
-    <h1>Donation Camps</h1>
 
-    <form method="GET" action="/donate-location">
-        <label for="location">Filter by Location:</label>
-        <input type="text" id="location" name="location" placeholder="Enter a city or location...">
-        <button type="submit">Search</button>
-    </form>
+{% extends "base.html" %}
 
-    <div class="camps-container">
-        {% for camp in camps %}
-            <div class="camp-box">
-                <h3><a href="{{ url_for('camp_details', id=camp['id']) }}">{{ camp['camp_name'] }}</a></h3>
-                <p>Location: {{ camp['location'] }}</p>
-                <p>Timings: {{ camp['timings'] }}</p>
-            </div>
-        {% else %}
-            <p>No camps available.</p>
-        {% endfor %}
-    </div>
-</body>
-</html>
+{% block title %}Donation Camps{% endblock %}
+
+{% block content %}
+<h1>Donation Camps</h1>
+
+{% if username %}
+    <p>Welcome, {{ username }}!</p>
+{% else %}
+    <p>Please log in to view donation camps.</p>
+{% endif %}
+
+<form method="GET" action="/donate-location">
+    <label for="location">Filter by Location:</label>
+    <input type="text" id="location" name="location" placeholder="Enter a city or location...">
+    <button type="submit">Search</button>
+</form>
+
+<div class="camps-container">
+    {% for camp in camps %}
+        <div class="camp-box">
+            <h3><a href="{{ url_for('camp_details', id=camp['id']) }}">{{ camp['camp_name'] }}</a></h3>
+            <p>Location: {{ camp['location'] }}</p>
+            <p>Timings: {{ camp['timings'] }}</p>
+        </div>
+    {% else %}
+        <p>No camps available.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

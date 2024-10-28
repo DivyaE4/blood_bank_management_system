@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Donations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='view_donations.css') }}">
+</head>
+<body>
+
+    <div class="donations-container">
+        <h1>{{ username }}'s Donations</h1>
+        
+        {% if donations %}
+            <div class="donation-list">
+                {% for donation in donations %}
+                    <div class="donation-card">
+                        <h2>{{ donation.camp_name }}</h2>
+                        <p><strong>Location:</strong> {{ donation.location }}</p>
+                        <p><strong>Timings:</strong> {{ donation.timings }}</p>
+                        <p><strong>Address:</strong> {{ donation.address }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No donations found. You haven't made any donations yet.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

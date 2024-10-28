@@ -1,0 +1,70 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4; /* Light background for contrast */
+}
+
+/* Header Styles */
+header {
+    background: #333; /* Dark background for header */
+    color: #fff; /* White text color */
+    padding: 10px 0; /* Padding for header */
+}
+
+/* Navigation Styles */
+nav {
+    max-width: 1200px; /* Max width for the nav */
+    margin: 0 auto; /* Center align the nav */
+    display: flex;
+    justify-content: space-between; /* Space between links */
+}
+
+nav ul {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Flex display for horizontal links */
+}
+
+nav ul li {
+    margin: 0 15px; /* Space between links */
+}
+
+nav ul li a {
+    text-decoration: none; /* Remove underline from links */
+    color: #fff; /* White text for links */
+    padding: 8px 15px; /* Padding around links */
+    transition: background 0.3s; /* Smooth transition for hover effect */
+}
+
+nav ul li a:hover {
+    background: #555; /* Darker background on hover */
+    border-radius: 5px; /* Rounded corners on hover */
+}
+
+/* Main Content Styles */
+main {
+    max-width: 1200px; /* Max width for main content */
+    margin: 20px auto; /* Center main content */
+    padding: 20px; /* Padding around main content */
+    background: #fff; /* White background for main content */
+    border-radius: 8px; /* Rounded corners for main content */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Footer Styles */
+footer {
+    text-align: center; /* Center align footer text */
+    padding: 15px 0; /* Padding for footer */
+    background: #333; /* Same dark background as header */
+    color: #fff; /* White text for footer */
+    position: relative; /* Position relative for footer */
+    bottom: 0; /* Position footer at the bottom */
+    width: 100%; /* Full width footer */
+}
