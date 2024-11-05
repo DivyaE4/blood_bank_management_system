@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Page</title>
+    <!-- Link the CSS file correctly -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='donate.css') }}">
+</head>
+<body>
+    <div class="donation-container">
+        <!-- Left-side for motivational text or images -->
+        <div class="left-side">
+            <div class="left-text">
+                <h2>Make a Request!</h2>
+                <p>In need of blood? Submit your request now and get the life-saving help you deserve.</p>
+            </div>
+        </div>
+
+        <!-- Right-side for donation content -->
+        <div class="right-side">
+            <h1>Request Portal</h1>
+
+            <!-- Button section -->
+            <div class="button-section">
+                <!-- Properly formatted <a> tags for routing -->
+                <a href="/make-request" class="button">Make a Request</a>
+                <a href="/view-requests" class="button">View Previous Requests</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.request-container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    height: 600px;
+    background-color: rgba(255, 255, 255, 0.9); 
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+}
+
+.left-side {
+    background: linear-gradient(135deg, #ff4e50, #cb0724);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.left-side::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    top: -100px;
+    left: -100px;
+    z-index: 1;
+}
+
+.left-text {
+    position: relative;
+    z-index: 2;
+}
+
+.left-text h1 {
+    font-size: 32px; /* Changed from h2 to h1 for consistency */
+    margin-bottom: 20px;
+}
+
+.left-text p {
+    font-size: 18px;
+}
+
+.right-side {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.welcome-box {
+    display: flex;
+    align-items: center;
+    background-color: #ff6666; /* Match button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 30px; /* Space below the welcome box */
+}
+
+.user-icon {
+    width: 30px; /* Adjust icon size */
+    height: 30px; /* Adjust icon size */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.right-side h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+.form-group label {
+    font-size: 14px; /* Slightly smaller label font size */
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-group input[type="text"], 
+.form-group input[type="password"], 
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+}
+
+.button {
+    display: inline-block;
+    background-color: #ff6666;
+    color: white;
+    padding: 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 15px 0;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background-color: rgba(255, 102, 102, 0.8);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}

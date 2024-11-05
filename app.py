@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, session
 import mysql.connector
 from forms import LoginForm, RegisterForm,AdminLoginForm  # Assuming you have these forms created
 from config import SECRET_KEY  # Replace with your secret key
@@ -21,7 +21,6 @@ def get_db_connection():
 @app.route('/')
 def home():
     return render_template('home.html')
-
 
 
 # Donation location route with filtering
@@ -56,7 +55,7 @@ from flask import session  # Import session
 # Route for user login
 @app.route('/donor_recipient', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    form = LoginForm()  # Ensure you have a LoginForm defined in your forms.py    
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
@@ -64,7 +63,7 @@ def login():
         # Check if the user exists in the MySQL database
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        query = 'SELECT * FROM login_details WHERE username = %s AND password = %s'  # No password hashing here for simplicity
+        query = 'SELECT * FROM login_details WHERE username = %s AND password = %s'  # Note: No password hashing here for simplicity
         cursor.execute(query, (username, password))
         user = cursor.fetchone()
         cursor.close()
@@ -138,11 +137,10 @@ def register():
                        VALUES (%s, %s, %s, %s, %s)'''
             cursor.execute(query, (username, password, age, blood_type, contact_info))
             conn.commit()
+            cursor.close()
+            conn.close()
             flash('Registration successful! You can now log in.', 'success')
             return redirect(url_for('login'))
-        
-        cursor.close()
-        conn.close()
     
     return render_template('register.html', form=form)
 
@@ -192,12 +190,38 @@ def camp_details(id):
 
     return render_template('camp_details.html', camp=camp)
 
+@app.route('/view-requests')
+def view_requests():
+    # Ensure user is logged in
+    if 'user_id' not in session:
+        flash('Please log in to view your requests.', 'danger')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    
+    # Connect to the database and fetch requests made by the logged-in user
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = '''SELECT request_id, recipient_id, blood_type, quantity, request_date, status 
+           FROM requests 
+           WHERE recipient_id = %s 
+           ORDER BY request_date DESC'''
+    cursor.execute(query, (user_id,))
+    requests = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('view_requests.html', requests=requests, username=session.get('username'))
 
 
 
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
+    # Ensure user is logged in
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
     return render_template('dashboard.html')
 
 # Donation-related routes
@@ -240,5 +264,73 @@ def logout():
     return redirect(url_for('home'))
 
 
+# Route for the Request Management page
+@app.route('/request', methods=['GET'])
+def request1():
+    return render_template('request.html')
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf'}
+
+# Helper function to check file extension
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/make-request', methods=['GET', 'POST'])
+def make_request():
+    form = RequestForm()
+
+    # Ensure user is logged in, otherwise redirect
+    if 'user_id' not in session:
+        return redirect(url_for('login'))  # Assuming you have a login route
+    
+    # Get the logged-in user's ID and username from the session
+    recipient_id = session.get('user_id')
+    username = session.get('username')
+
+    if form.validate_on_submit():
+        blood_type = form.blood_type.data
+        quantity = form.quantity.data
+
+        # Check if a file was uploaded
+        if 'id_proof' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+
+        id_proof = request.files['id_proof']  # This should work without issue
+
+        # Validate file
+        if id_proof and allowed_file(id_proof.filename):
+            filename = secure_filename(id_proof.filename)
+            file_data = id_proof.read()  # Read file as binary data (for BLOB)
+            
+            try:
+                # Insert the request into the database
+                conn = get_db_connection()
+                cursor = conn.cursor()
+                cursor.execute('''INSERT INTO requests (recipient_id, blood_type, quantity, id_proof, status)
+                                  VALUES (%s, %s, %s, %s, 'pending')''', 
+                               (recipient_id, blood_type, quantity, file_data))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                
+                flash('Request submitted successfully!')
+                return redirect(url_for('request_status'))  # Redirect after successful submission
+            except Exception as e:
+                conn.rollback()
+                flash(f'Error submitting request: {e}')
+                print(f'Error: {e}')  # Log the error for debugging
+        else:
+            flash('Invalid file type. Please upload a valid image or PDF.')
+    
+    return render_template('make_request.html', form=form, username=username)
+
+# Confirmation page
+@app.route('/request_status')
+def request_status():
+    return render_template('request_status.html')
+
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)  # Enable debug mode for development

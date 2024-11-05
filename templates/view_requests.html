@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View Requests</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='view_requests.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>View Your Requests</h2>
+        <p>Welcome, {{ username }}! Here are your blood donation requests:</p>
+        
+        {% if requests %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Blood Type</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Submission Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                        <tr>
+                            <td>{{ request.request_id }}</td>
+                            <td>{{ request.blood_type }}</td>
+                            <td>{{ request.quantity }}</td>
+                            <td>{{ request.status }}</td>
+                            <td>{{ request.request_date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have not made any requests yet.</p>
+        {% endif %}
+
+        <a href="{{ url_for('dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,8 +1,8 @@
 USE donation_db;
 
-Create the login_details table
+-- Create the login_details table
 CREATE TABLE IF NOT EXISTS login_details (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
     age INTEGER NOT NULL,
@@ -10,26 +10,14 @@ CREATE TABLE IF NOT EXISTS login_details (
     contact_info VARCHAR(10) UNIQUE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS donation_camps (
+
+CREATE TABLE donation_camps (
     id INT AUTO_INCREMENT PRIMARY KEY,
     camp_name VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
     timings VARCHAR(100) NOT NULL,
     address TEXT NOT NULL
 );
-
--- Create the donations table
-CREATE TABLE IF NOT EXISTS donations (
-    donation_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    camp_name VARCHAR(255) NOT NULL,
-    camp_id INT NOT NULL,
-    location VARCHAR(255) NOT NULL,
-    timings VARCHAR(100) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES login_details(id),
-    FOREIGN KEY (camp_id) REFERENCES donation_camps(id)
-);
-
 
 INSERT INTO donation_camps (camp_name, location, timings, address) 
 VALUES 
@@ -40,7 +28,7 @@ VALUES
 ('Healing Hands Blood Camp', 'Mumbai', '10 AM - 6 PM', 'Lilavati Hospital, Bandra West, Mumbai, Maharashtra'),
 
 ('Hope Givers Blood Drive', 'Bengaluru', '10 AM - 6 PM', 'M.S. Ramaiah Medical College, Mathikere, Bengaluru, Karnataka'),
-('VitalBlood Donation Camp', 'Bengaluru', '9 AM - 5 PM', 'St. John\'s Medical College, Koramangala, Bengaluru, Karnataka'),
+('VitalBlood Donation Camp', 'Bengaluru', '9 AM - 5 PM', 'St. John Medical College, Koramangala, Bengaluru, Karnataka'),
 ('RedDrop Blood Donation', 'Bengaluru', '8 AM - 4 PM', 'Manipal Hospital, Old Airport Road, Bengaluru, Karnataka'),
 ('LifeSource Blood Camp', 'Bengaluru', '9 AM - 5 PM', 'Bowring and Lady Curzon Hospital, Shivajinagar, Bengaluru, Karnataka'),
 ('Blood Bridge Donation Camp', 'Bengaluru', '10 AM - 6 PM', 'Victoria Hospital, K.R. Market, Bengaluru, Karnataka'),
@@ -68,3 +56,31 @@ VALUES
 ('Red Cross Blood Donation Drive', 'Kolkata', '8 AM - 4 PM', 'Apollo Gleneagles Hospitals, Salt Lake, Kolkata, West Bengal'),
 ('Healing Hands Blood Camp', 'Kolkata', '9 AM - 5 PM', 'Woodlands Multispeciality Hospital, Alipore, Kolkata, West Bengal'),
 ('LifeSource Blood Camp', 'Kolkata', '10 AM - 6 PM', 'Peerless Hospital, Panchasayar, Kolkata, West Bengal');
+
+-- Create the requests table
+
+CREATE TABLE IF NOT EXISTS requests (
+    request_id INT AUTO_INCREMENT PRIMARY KEY,
+    recipient_id INT,
+    blood_type VARCHAR(3),
+    quantity INT NOT NULL,
+    request_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'pending',
+    id_proof MEDIUMBLOB,  -- Change from BLOB to MEDIUMBLOB or LONGBLOB
+    FOREIGN KEY (recipient_id) REFERENCES login_details(id)
+);
+
+
+-- Create the donations table
+CREATE TABLE IF NOT EXISTS donations (
+    donation_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    camp_name VARCHAR(255) NOT NULL,
+    camp_id INT NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    timings VARCHAR(100) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES login_details(id),
+    FOREIGN KEY (camp_id) REFERENCES donation_camps(id)
+);
+
+
