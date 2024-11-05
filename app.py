@@ -1,9 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 import mysql.connector
-from werkzeug.security import generate_password_hash
-from werkzeug.utils import secure_filename
-from forms import LoginForm, RegisterForm, RequestForm  # Assuming you have these forms created
-from config import SECRET_KEY, PASSWORD  # Replace with your secret key
+from forms import LoginForm, RegisterForm,AdminLoginForm  # Assuming you have these forms created
+from config import SECRET_KEY  # Replace with your secret key
+from config import PASSWORD
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -81,6 +80,37 @@ def login():
     return render_template('login.html', form=form)
 
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin_login():
+    form = AdminLoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        
+        # Check if the admin exists in the MySQL database
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        query = 'SELECT * FROM admin_details WHERE username = %s AND password = %s'
+        cursor.execute(query, (username, password))
+        admin = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        
+        if admin:
+            session['admin_id'] = admin['id']  # Store admin ID in session
+            session['admin_username'] = admin['username']  # Store admin username in session
+            flash('Admin login successful!', 'success')
+            return redirect(url_for('admin_dashboard'))  # Redirect to an admin dashboard or home page
+        else:
+            flash('Invalid admin username or password.', 'danger')
+    
+    return render_template('admin_login.html', form=form)
+
+
+
+
+
+
 
 # Route for user registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -135,15 +165,21 @@ def camp_details(id):
             return redirect(url_for('login'))
 
         user_id = session['user_id']
+        
+        # Fetch the user's blood type
+        cursor.execute("SELECT blood_type FROM login_details WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+        blood_type = user['blood_type']
+
         camp_name = camp['camp_name']
         location = camp['location']
         timings = camp['timings']
 
         # Insert the donation into the donations table
         cursor.execute(
-            "INSERT INTO donations (user_id, camp_id, camp_name, location, timings) "
-            "VALUES (%s, %s, %s, %s, %s)",
-            (user_id, id, camp_name, location, timings)
+            "INSERT INTO donations (user_id, camp_id, camp_name, location, timings, blood_type) "
+            "VALUES (%s, %s, %s, %s, %s, %s)",
+            (user_id, id, camp_name, location, timings, blood_type)
         )
         conn.commit()
         flash('Donation successful!', 'success')
