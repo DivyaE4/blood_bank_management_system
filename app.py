@@ -289,6 +289,79 @@ def make_request():
     
     return render_template('make_request.html', form=form, username=username)
 
+# Function to update inventory based on the current state of the donations table
+def update_inventory():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Aggregate blood types and quantities from donations
+    cursor.execute("""
+        SELECT blood_type, SUM(quantity) AS total_units
+        FROM donations
+        GROUP BY blood_type
+    """)
+    results = cursor.fetchall()
+
+    # Update inventory based on aggregated results
+    for (blood_type, total_units) in results:
+        # Check if the blood type exists in the inventory
+        cursor.execute("SELECT qty FROM inventory WHERE blood_type = %s", (blood_type,))
+        if cursor.fetchone():
+            # Update the quantity for existing blood type
+            cursor.execute("UPDATE inventory SET qty = %s WHERE blood_type = %s", (total_units, blood_type))
+        else:
+            # Insert new blood type into inventory if it doesn't exist
+            cursor.execute("INSERT INTO inventory (blood_type, qty) VALUES (%s, %s)", (blood_type, total_units))
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+# Function to handle blood requests by reducing inventory quantity
+def handle_request(blood_type, requested_qty):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Check current quantity in inventory
+    cursor.execute("SELECT qty FROM inventory WHERE blood_type = %s", (blood_type,))
+    result = cursor.fetchone()
+    if result and result[0] >= requested_qty:
+        # Fulfill the request
+        new_qty = result[0] - requested_qty
+        cursor.execute("UPDATE inventory SET qty = %s WHERE blood_type = %s", (new_qty, blood_type))
+        connection.commit()
+        response = "Request fulfilled"
+    else:
+        response = "Insufficient quantity"
+
+    cursor.close()
+    connection.close()
+    return response
+
+
+@app.route('/admin/view_inventory')
+def view_inventory():
+    # Update inventory in real-time before displaying it
+    update_inventory()
+    
+    # Retrieve inventory data
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM inventory")
+    inventory = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    
+    return render_template('inventory.html', inventory=inventory)
+
+@app.route('/admin/request_blood', methods=['POST'])
+def request_blood():
+    blood_type = request.form.get('blood_type')
+    requested_qty = int(request.form.get('quantity'))
+    result = handle_request(blood_type, requested_qty)
+    flash(result)
+    return redirect(url_for('view_inventory'))
+
 # Confirmation page
 @app.route('/request_status')
 def request_status():

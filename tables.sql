@@ -83,4 +83,10 @@ CREATE TABLE IF NOT EXISTS donations (
     FOREIGN KEY (camp_id) REFERENCES donation_camps(id)
 );
 
+CREATE TABLE IF NOT EXISTS inventory (
+    blood_type VARCHAR(3) PRIMARY KEY,
+    qty INT DEFAULT 0
+);
+
+
 
