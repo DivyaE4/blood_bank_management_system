@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Inventory Management</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='inventory.css') }}">
 </head>
 <body>
     <h1>Blood Inventory</h1>
@@ -23,26 +23,5 @@
             {% endfor %}
         </tbody>
     </table>
-    
-    <h2>Request Blood</h2>
-    <form action="{{ url_for('request_blood') }}" method="post">
-        <label for="blood_type">Blood Type:</label>
-        <input type="text" id="blood_type" name="blood_type" required>
-        
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required>
-        
-        <button type="submit">Submit Request</button>
-    </form>
-    
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
 </body>
 </html>

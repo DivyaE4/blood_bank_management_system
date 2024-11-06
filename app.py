@@ -100,16 +100,20 @@ def admin_login():
             session['admin_id'] = admin['id']  # Store admin ID in session
             session['admin_username'] = admin['username']  # Store admin username in session
             flash('Admin login successful!', 'success')
-            return redirect(url_for('admin_dashboard'))  # Redirect to an admin dashboard or home page
+            return redirect('/admin_dashboard')  # Redirect to an admin dashboard or home page
         else:
             flash('Invalid admin username or password.', 'danger')
     
     return render_template('admin_login.html', form=form)
 
-
-
-
-
+@app.route('/admin_dashboard')
+def admin_dashboard():
+    # Ensure the user is logged in as an admin
+    # if not session.get('admin_logged_in'):
+    #     flash('Please log in to access the admin dashboard', 'danger')
+    #     return redirect(url_for('admin_dashboard'))
+    
+    return render_template('admin_dashboard.html')
 
 
 # Route for user registration
@@ -330,9 +334,9 @@ def update_inventory():
     connection = get_db_connection()
     cursor = connection.cursor()
 
-    # Aggregate blood types and quantities from donations
+    # Aggregate the total donations for each blood type
     cursor.execute("""
-        SELECT blood_type, SUM(quantity) AS total_units
+        SELECT blood_type, COUNT(*) AS total_units
         FROM donations
         GROUP BY blood_type
     """)
@@ -342,16 +346,20 @@ def update_inventory():
     for (blood_type, total_units) in results:
         # Check if the blood type exists in the inventory
         cursor.execute("SELECT qty FROM inventory WHERE blood_type = %s", (blood_type,))
-        if cursor.fetchone():
-            # Update the quantity for existing blood type
-            cursor.execute("UPDATE inventory SET qty = %s WHERE blood_type = %s", (total_units, blood_type))
+        existing_qty = cursor.fetchone()
+        
+        if existing_qty:
+            # Add the total_units to the existing quantity
+            new_qty = total_units
+            cursor.execute("UPDATE inventory SET qty = %s WHERE blood_type = %s", (new_qty, blood_type))
         else:
-            # Insert new blood type into inventory if it doesn't exist
+            # Insert a new record for blood type if it doesn't exist in inventory
             cursor.execute("INSERT INTO inventory (blood_type, qty) VALUES (%s, %s)", (blood_type, total_units))
 
     connection.commit()
     cursor.close()
     connection.close()
+
 
 # Function to handle blood requests by reducing inventory quantity
 def handle_request(blood_type, requested_qty):
@@ -374,8 +382,7 @@ def handle_request(blood_type, requested_qty):
     connection.close()
     return response
 
-
-@app.route('/admin/view_inventory')
+@app.route('/view_inventory')
 def view_inventory():
     # Update inventory in real-time before displaying it
     update_inventory()
@@ -390,7 +397,7 @@ def view_inventory():
     
     return render_template('inventory.html', inventory=inventory)
 
-@app.route('/admin/request_blood', methods=['POST'])
+@app.route('/request_blood', methods=['POST'])
 def request_blood():
     blood_type = request.form.get('blood_type')
     requested_qty = int(request.form.get('quantity'))

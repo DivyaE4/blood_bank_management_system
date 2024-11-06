@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS donations (
     timings VARCHAR(100) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES login_details(id),
     FOREIGN KEY (camp_id) REFERENCES donation_camps(id)
+    blood_type VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS inventory (

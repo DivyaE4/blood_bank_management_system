@@ -43,3 +43,8 @@ class Request(db.Model):
 
     def __repr__(self):
         return f'<Request {self.request_id}>'
+    
+class Inventory(db.Model):
+    __tablename__ = 'inventory'
+    blood_type = db.Column(db.String(3), primary_key=True)
+    qty = db.Column(db.Integer, default=0)
