@@ -410,6 +410,45 @@ def request_blood():
 def request_status():
     return render_template('request_status.html')
 
+@app.route('/view_users')
+def view_users():
+    # Ensure the user is logged in as an admin
+    if 'admin_id' not in session:
+        flash('Please log in as an admin to view users.', 'danger')
+        return redirect(url_for('admin_login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM login_details")
+    users = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template('view_users.html', users=users)
+
+@app.route('/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    # Ensure the user is logged in as an admin
+    if 'admin_id' not in session:
+        flash('Please log in as an admin to delete users.', 'danger')
+        return redirect(url_for('admin_login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        # Call the stored procedure to delete the user and associated records
+        cursor.callproc('delete_user', (user_id,))
+        conn.commit()
+        flash('User  deleted successfully!', 'success')
+    except Exception as e:
+        conn.rollback()
+        flash(f'Error deleting user: {e}', 'danger')
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('view_users'))
 
 
 if __name__ == '__main__':
