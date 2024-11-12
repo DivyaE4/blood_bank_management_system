@@ -194,31 +194,6 @@ def camp_details(id):
 
     return render_template('camp_details.html', camp=camp)
 
-@app.route('/view-requests')
-def view_requests():
-    # Ensure user is logged in
-    if 'user_id' not in session:
-        flash('Please log in to view your requests.', 'danger')
-        return redirect(url_for('login'))
-
-    user_id = session['user_id']
-    
-    # Connect to the database and fetch requests made by the logged-in user
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    query = '''SELECT request_id, recipient_id, blood_type, quantity, request_date, status 
-           FROM requests 
-           WHERE recipient_id = %s 
-           ORDER BY request_date DESC'''
-    cursor.execute(query, (user_id,))
-    requests = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    return render_template('view_requests.html', requests=requests, username=session.get('username'))
-
-
 
 # Dashboard route
 @app.route('/dashboard')
