@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='inventory.css') }}">
+</head>
+<body>
+    <h1>Blood Inventory</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Blood Type</th>
+                <th>Quantity (Units)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in inventory %}
+            <tr>
+                <td>{{ item.blood_type }}</td>
+                <td>{{ item.qty }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

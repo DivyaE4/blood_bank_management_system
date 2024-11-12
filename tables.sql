@@ -81,6 +81,12 @@ CREATE TABLE IF NOT EXISTS donations (
     timings VARCHAR(100) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES login_details(id),
     FOREIGN KEY (camp_id) REFERENCES donation_camps(id)
+    blood_type VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS inventory (
+    blood_type VARCHAR(3) PRIMARY KEY,
+    qty INT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS admin_details (
@@ -88,4 +94,7 @@ CREATE TABLE IF NOT EXISTS admin_details (
     username VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL  -- Plain text for simplicity; consider using hashed passwords
 );
+
+
+
 

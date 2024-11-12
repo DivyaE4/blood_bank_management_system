@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm7nRP55yUe-QhO9a0-ilH2mX57SvVNzIT_g&s') no-repeat center center fixed; 
+    background-size: cover;
+    color: #333;
+}
+
+.dashboard-container {
+    text-align: center;
+    padding: 50px 0;
+    background-color: rgba(229, 57, 53, 0.8);
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+.button {
+    display: inline-block;
+    background-color: #e53935;
+    color: #fff;
+    padding: 20px 40px;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #c62828;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.dashboard-container {
+    text-align: center; /* Center-align text in the container */
+}
+
+table {
+    margin: 20px auto; /* Center the table by setting left and right margins to auto */
+    border-collapse: collapse; /* Collapse borders for a cleaner look */
+    width: 80%; /* Set the width of the table */
+    max-width: 800px; /* Maximum width of the table */
+    background-color: rgba(194, 113, 113, 0.9); /* Light background for the table */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+th, td {
+    padding: 12px; /* Add padding for cells */
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #ddd; /* Add a bottom border to rows */
+}
+
+th {
+    background-color: #e53935; /* Header background color */
+    color: white; /* Header text color */
+}
+
+tr:hover {
+    background-color: rgba(229, 57, 53, 0.2); /* Highlight row on hover */
+}
+
+.button {
+    display: inline-block;
+    margin-top: 20px; /* Add some space above the button */
+}

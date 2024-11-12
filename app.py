@@ -434,11 +434,21 @@ def admin_login():
             session['admin_id'] = admin['id']  # Store admin ID in session
             session['admin_username'] = admin['username']  # Store admin username in session
             flash('Admin login successful!', 'success')
-            return redirect(url_for('admin_dashboard'))  # Redirect to an admin dashboard or home page
+            return redirect('/admin_dashboard')  # Redirect to an admin dashboard or home page
         else:
             flash('Invalid admin username or password.', 'danger')
     
     return render_template('admin_login.html', form=form)
+
+@app.route('/admin_dashboard')
+def admin_dashboard():
+    # Ensure the user is logged in as an admin
+    # if not session.get('admin_logged_in'):
+    #     flash('Please log in to access the admin dashboard', 'danger')
+    #     return redirect(url_for('admin_dashboard'))
+    
+    return render_template('admin_dashboard.html')
+
 
 # Route for user registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -520,29 +530,6 @@ def camp_details(id):
 
     return render_template('camp_details.html', camp=camp)
 
-@app.route('/view-requests')
-def view_requests():
-    # Ensure user is logged in
-    if 'user_id' not in session:
-        flash('Please log in to view your requests.', 'danger')
-        return redirect(url_for('login'))
-
-    user_id = session['user_id']
-    
-    # Connect to the database and fetch requests made by the logged-in user
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    query = '''SELECT request_id, recipient_id, blood_type, quantity, request_date, status 
-           FROM requests 
-           WHERE recipient_id = %s 
-           ORDER BY request_date DESC'''
-    cursor.execute(query, (user_id,))
-    requests = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    return render_template('view_requests.html', requests=requests, username=session.get('username'))
 
 # Dashboard route
 @app.route('/dashboard')
@@ -652,10 +639,125 @@ def make_request():
     
     return render_template('make_request.html', form=form, username=username)
 
+# Function to update inventory based on the current state of the donations table
+def update_inventory():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Aggregate the total donations for each blood type
+    cursor.execute("""
+        SELECT blood_type, COUNT(*) AS total_units
+        FROM donations
+        GROUP BY blood_type
+    """)
+    results = cursor.fetchall()
+
+    # Update inventory based on aggregated results
+    for (blood_type, total_units) in results:
+        # Check if the blood type exists in the inventory
+        cursor.execute("SELECT qty FROM inventory WHERE blood_type = %s", (blood_type,))
+        existing_qty = cursor.fetchone()
+        
+        if existing_qty:
+            # Add the total_units to the existing quantity
+            new_qty = total_units
+            cursor.execute("UPDATE inventory SET qty = %s WHERE blood_type = %s", (new_qty, blood_type))
+        else:
+            # Insert a new record for blood type if it doesn't exist in inventory
+            cursor.execute("INSERT INTO inventory (blood_type, qty) VALUES (%s, %s)", (blood_type, total_units))
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+
+# Function to handle blood requests by reducing inventory quantity
+def handle_request(blood_type, requested_qty):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Check current quantity in inventory
+    cursor.execute("SELECT qty FROM inventory WHERE blood_type = %s", (blood_type,))
+    result = cursor.fetchone()
+    if result and result[0] >= requested_qty:
+        # Fulfill the request
+        new_qty = result[0] - requested_qty
+        cursor.execute("UPDATE inventory SET qty = %s WHERE blood_type = %s", (new_qty, blood_type))
+        connection.commit()
+        response = "Request fulfilled"
+    else:
+        response = "Insufficient quantity"
+
+    cursor.close()
+    connection.close()
+    return response
+
+@app.route('/view_inventory')
+def view_inventory():
+    # Update inventory in real-time before displaying it
+    update_inventory()
+    
+    # Retrieve inventory data
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM inventory")
+    inventory = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    
+    return render_template('inventory.html', inventory=inventory)
+
+@app.route('/request_blood', methods=['POST'])
+def request_blood():
+    blood_type = request.form.get('blood_type')
+    requested_qty = int(request.form.get('quantity'))
+    result = handle_request(blood_type, requested_qty)
+    flash(result)
+    return redirect(url_for('view_inventory'))
+
 # Confirmation page
 @app.route('/request_status')
 def request_status():
     return render_template('request_status.html')
 
+@app.route('/view_users')
+def view_users():
+    # Ensure the user is logged in as an admin
+    if 'admin_id' not in session:
+        flash('Please log in as an admin to view users.', 'danger')
+        return redirect(url_for('admin_login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM login_details")
+    users = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template('view_users.html', users=users)
+
+@app.route('/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    # Ensure the user is logged in as an admin
+    if 'admin_id' not in session:
+        flash('Please log in as an admin to delete users.', 'danger')
+        return redirect(url_for('admin_login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        # Call the stored procedure to delete the user and associated records
+        cursor.callproc('delete_user', (user_id,))
+        conn.commit()
+        flash('User  deleted successfully!', 'success')
+    except Exception as e:
+        conn.rollback()
+        flash(f'Error deleting user: {e}', 'danger')
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('view_users'))
 if __name__ == '__main__':
     app.run(debug=True)  # Enable debug mode for development
