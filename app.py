@@ -45,7 +45,7 @@ def index():
     cursor.close()
     conn.close()
     
-    return render_template('donate_location.html', camps=camps, username=session.get('username'))  # Pass username to the template
+    return render_template('donate_location.html', camps=camps, username=session.get('username'))  
 
 # Route for user login
 @app.route('/donor_recipient', methods=['GET', 'POST'])
@@ -299,38 +299,6 @@ def make_request():
     
     return render_template('make_request.html', form=form, username=username)
 
-# # Function to update inventory based on the current state of the donations table
-# def update_inventory():
-#     connection = get_db_connection()
-#     cursor = connection.cursor()
-
-#     # Aggregate the total donations for each blood type
-#     cursor.execute("""
-#         SELECT blood_type, COUNT(*) AS total_units
-#         FROM donations
-#         GROUP BY blood_type
-#     """)
-#     results = cursor.fetchall()
-
-#     # Update inventory based on aggregated results
-#     for (blood_type, total_units) in results:
-#         # Check if the blood type exists in the inventory
-#         cursor.execute("SELECT qty FROM inventory WHERE blood_type = %s", (blood_type,))
-#         existing_qty = cursor.fetchone()
-        
-#         if existing_qty:
-#             # Add the total_units to the existing quantity
-#             new_qty = total_units
-#             cursor.execute("UPDATE inventory SET qty = %s WHERE blood_type = %s", (new_qty, blood_type))
-#         else:
-#             # Insert a new record for blood type if it doesn't exist in inventory
-#             cursor.execute("INSERT INTO inventory (blood_type, qty) VALUES (%s, %s)", (blood_type, total_units))
-
-#     connection.commit()
-#     cursor.close()
-#     connection.close()
-
-# Function to update inventory based on the current state of the donations table
 def update_inventory():
     connection = get_db_connection()
     cursor = connection.cursor()

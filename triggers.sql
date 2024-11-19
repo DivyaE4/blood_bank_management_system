@@ -1,3 +1,4 @@
+-- if qty less than 5 it is automatically set to approved
 DELIMITER //
 
 CREATE TRIGGER before_insert_request
@@ -13,6 +14,7 @@ END //
 
 DELIMITER ;
 
+-- increases count of donations
 ALTER TABLE donation_camps ADD COLUMN donation_count INT DEFAULT 0;
 
 DELIMITER //
@@ -28,6 +30,7 @@ END //
 
 DELIMITER ;
 
+-- changes when more than 5
 CREATE TABLE request_logs (
     log_id INT AUTO_INCREMENT PRIMARY KEY,
     request_id INT,
@@ -51,6 +54,7 @@ DELIMITER ;
 
 DELIMITER //
 
+-- contact info is unique 
 CREATE TRIGGER before_insert_login_details
 BEFORE INSERT ON login_details
 FOR EACH ROW
@@ -66,6 +70,7 @@ DELIMITER ;
 
 DELIMITER //
 
+-- adds timestamp to requests
 CREATE TRIGGER before_insert_request_timestamp
 BEFORE INSERT ON requests
 FOR EACH ROW
